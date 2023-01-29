@@ -1,3 +1,17 @@
+
+//form 
+const login =(e) =>{
+    e.preventDefault()
+        document.getElementById("form").classList.add("hide")
+        
+            mainApp.classList.remove("hide")
+    }
+
+    const mainApp = document.getElementById("sticky-notes")
+    document.getElementById("submitBtn").addEventListener("click", login)
+    
+
+
 /* -- Storage --*/
 const Storage = (() =>{
 
