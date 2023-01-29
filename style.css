@@ -77,6 +77,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 main {
   width: 100%;
@@ -415,4 +416,9 @@ border: 1px solid rgba(0, 0, 0, 0.514);
     justify-content: start;
     padding-bottom: 6rem;
   }
+}
+
+
+.hide{
+  display: none;
 }
