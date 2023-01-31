@@ -1,14 +1,29 @@
 
-//form 
-const login =(e) =>{
-    e.preventDefault()
-        document.getElementById("form").classList.add("hide")
-        
-            mainApp.classList.remove("hide")
+//Form Login
+
+const Formulario = (() =>{
+    const formState = {
+        user: null,
     }
 
-    const mainApp = document.getElementById("sticky-notes")
-    document.getElementById("submitBtn").addEventListener("click", login)
+    return {
+        getUsername(){
+            return formState.user;
+        },
+        setUsername(nickname){
+            formState.user = nickname;
+        }
+    }
+})();
+
+const login =(e) =>{
+    e.preventDefault();
+        document.getElementById("form").classList.add("hide")
+        mainApp.classList.remove("hide")
+}
+
+const mainApp = document.getElementById("sticky-notes")
+document.getElementById("formulario").addEventListener("submit", login)
     
 
 
@@ -36,6 +51,7 @@ const Storage = (() =>{
 /* -- UI --*/
 const UICtrl = (()=>{
     const UISelectors = {
+        mainApp: 'mainApp',
         notesContainer: 'notes-container',
         noteTitle: 'note-title',
         noteText: 'note-text',
@@ -45,7 +61,10 @@ const UICtrl = (()=>{
         // noteText: '.notes-paragraph',
         notesDiv: '.sticky-notes-card',
         colors: '.sticky-color',
-        selected: 'selected'
+        selected: 'selected',
+        form: 'formulario',
+        formDiv: 'form',
+
     }
 
     return {
@@ -174,6 +193,10 @@ const UICtrl = (()=>{
             const colorSelected = document.querySelector(`[data-color='${color}']`)
             colorSelected?.classList.remove('selected')
         },
+
+        hideForm(){
+            
+        }
 
         /*Features to be made */
         // selectedNote(noteDiv){
