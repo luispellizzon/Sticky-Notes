@@ -123,7 +123,7 @@ const UICtrl = (()=>{
             const {id, title, text, color} = note;
             if(color == ''){
                 Toastify({
-                    text: "❗Please, select a color❗",
+                    text: "❗Selecione uma cor❗",
                     duration: 3000,
                     destination: "https://github.com/apvarun/toastify-js",
                     newWindow: false,
@@ -134,8 +134,7 @@ const UICtrl = (()=>{
                     style: {
                       background: "#333",
                       color: '#fff',
-                      borderRadius: '20px'
-                      
+                      borderRadius: '20px',
                     },
                     onClick: function(){} // Callback after click
                   }).showToast();
@@ -362,8 +361,8 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
         let noteId = Math.floor(Math.random() * Date.now()); 
         const newNote = NotesCtrl.newNote({
             id: noteId,
-            title: "Note title..",
-            text: "New Note..",
+            title: "Título..",
+            text: "Clique no icone abaixo para editar ou excluir a sua notinha 😊!",
             color: state.noteColor,
         })
         UICtrl.animate(e);
