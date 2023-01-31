@@ -88,6 +88,29 @@ main {
   padding: 0.5rem;
 }
 
+.loader {
+  position: absolute;
+  left: 40%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border: 5px solid;
+  border-color: #2bff00 transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
 .sticky-container {
   position: relative;
   background-color: white;

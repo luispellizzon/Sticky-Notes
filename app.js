@@ -81,6 +81,11 @@ const UICtrl = (()=>{
         setUsernameTitle(username){
             document.getElementById(UISelectors.usernameDiv).innerText = username; 
         },
+        showLoading(){
+            const span = document.createElement('span')
+            span.classList.add('loader')
+            document.body.appendChild(span);
+        },
          populateNotesList(notes){
             let htmlList = "";
             
@@ -341,8 +346,11 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
         const savedUsername = Formulario.getUsername()
         Storage.saveUsername(savedUsername);
         UICtrl.hideForm();
+        UICtrl.showLoading();
         UICtrl.setUsernameTitle(savedUsername)
-        UICtrl.showNotesContainer();
+        setTimeout(()=>{
+            UICtrl.showNotesContainer();
+        },2000)
         
     }
 
