@@ -81,10 +81,16 @@ const UICtrl = (()=>{
         setUsernameTitle(username){
             document.getElementById(UISelectors.usernameDiv).innerText = username; 
         },
-        showLoading(){
-            const span = document.createElement('span')
-            span.classList.add('loader')
-            document.body.appendChild(span);
+        showLoading(isLoading){
+            if(isLoading){
+                const span = document.createElement('span')
+                span.classList.add('loader')
+                span.id = 'loader'
+                document.body.appendChild(span);
+            } else {
+                document.querySelector('.loader').remove();
+            }
+            
         },
          populateNotesList(notes){
             let htmlList = "";
@@ -224,6 +230,7 @@ const UICtrl = (()=>{
 
         showNotesContainer(){
             document.getElementById(UISelectors.mainApp).classList.remove("hide");
+            document.getElementById(UISelectors.mainApp).classList.add('showContainer')
         }
     }
 })();
@@ -340,17 +347,19 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
     }
 
     const login =(e) =>{
+        const isLoading = true
         e.preventDefault();
         const userName = e.target.children[0].value
         Formulario.setUsername(userName)
         const savedUsername = Formulario.getUsername()
         Storage.saveUsername(savedUsername);
         UICtrl.hideForm();
-        UICtrl.showLoading();
+        UICtrl.showLoading(isLoading);
         UICtrl.setUsernameTitle(savedUsername)
         setTimeout(()=>{
+            UICtrl.showLoading(!isLoading);
             UICtrl.showNotesContainer();
-        },2000)
+        },1500)
         
     }
 
