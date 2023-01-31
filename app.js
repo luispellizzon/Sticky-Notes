@@ -1,6 +1,4 @@
-
-//Form Login
-
+/* -- Form --*/
 const Formulario = (() =>{
     const formState = {
         user: "",
@@ -12,7 +10,6 @@ const Formulario = (() =>{
         },
         setUsername(nickname){
             formState.user = nickname;
-            console.log(formState.user)
         }
     }
 })();
@@ -25,7 +22,6 @@ const Storage = (() =>{
            const notes = JSON.parse(localStorage.getItem('notes')) ?? []
            return notes
         },
-
         storeNote(note, notesArray){
             notesArray.unshift(note)
             localStorage.setItem('notes', JSON.stringify(notesArray))
@@ -232,8 +228,6 @@ const NotesCtrl = (() =>{
         currentNote: null,
     }
 
-    console.log(state.notes)
-
     return {
         newNote(notesDetails){
             return new Note(notesDetails)
@@ -257,8 +251,7 @@ const NotesCtrl = (() =>{
             const currentId = parseInt(currentNote.id)
             
             const found = state.notes.find(note => note.id === currentId)
-            console.log(state.currentNote)
-            console.log(found)
+            
 
             if(state.currentNote.title !== ""){
                 found.title = state.currentNote.title
@@ -365,7 +358,7 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
         const newState = Storage.storeNote(newNote, NotesCtrl.getNotes());
         NotesCtrl.updateNotesArray(newState);
         NotesCtrl.getNotes();
-        console.log(NotesCtrl.getNotes())
+        
 
         //Reseting State and UI
         UICtrl.resetColor(state.noteColor);
@@ -386,7 +379,6 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
             noteSelected.title = e.target.value;
         } 
         
-        console.log(noteSelected)
         
     }
     const editNote = (e) =>{
@@ -394,20 +386,6 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
         state.noteSelected = NotesCtrl.getCurrentNote(noteDivId)
         
         UICtrl.isAble(noteDivId);
-        // const notesArray = NotesCtrl.editCurrent(parseInt(noteDivId))
-        // console.log(notesArray)
-        
-        
-        // const { noteSelected } = state
-        // noteSelected.id = e.currentTarget.id
-        // console.log(noteSelected)
-        
-        
-        // if(e.target.classList.contains('edit-card') || e.target.parentElement.classList.contains('edit-card') ){
-        //     const noteEditedAddedOnArray = NotesCtrl.editCurrent(noteSelected)
-        //     Storage.setNotes(noteEditedAddedOnArray)
-        // }
-        
     }
 
     const saveEditedNote =(e)=>{
@@ -416,17 +394,13 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
         const noteEditedAddedOnArray = NotesCtrl.editCurrent(noteSelected)
         const newNoteArrayAfterUpdate = NotesCtrl.getNotes(noteEditedAddedOnArray);
         Storage.setNotes(newNoteArrayAfterUpdate)
-        console.log(newNoteArrayAfterUpdate);
         UICtrl.isNotAble(noteDivId);
-
-        
-
-        // const notesArray = NotesCtrl.editCurrent(parseInt(noteDivId))
-        // console.log(notesArray)
     }
   
     return {
         async init(){
+            console.log("%c🤖 CoderHouse Project by\nLuis Pellizzon & Lucas Souza", "color:green;font-style:italic;")
+
             //CHECK IF USER EXIST
             const user = Storage.getUsername();
             if(user != ""){
