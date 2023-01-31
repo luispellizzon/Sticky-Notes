@@ -3,7 +3,7 @@
 
 const Formulario = (() =>{
     const formState = {
-        user: null,
+        user: "",
     }
 
     return {
@@ -15,17 +15,6 @@ const Formulario = (() =>{
         }
     }
 })();
-
-const login =(e) =>{
-    e.preventDefault();
-        document.getElementById("form").classList.add("hide")
-        mainApp.classList.remove("hide")
-}
-
-const mainApp = document.getElementById("sticky-notes")
-document.getElementById("formulario").addEventListener("submit", login)
-    
-
 
 /* -- Storage --*/
 const Storage = (() =>{
@@ -51,7 +40,7 @@ const Storage = (() =>{
 /* -- UI --*/
 const UICtrl = (()=>{
     const UISelectors = {
-        mainApp: 'mainApp',
+        mainApp: 'sticky-notes',
         notesContainer: 'notes-container',
         noteTitle: 'note-title',
         noteText: 'note-text',
@@ -195,8 +184,13 @@ const UICtrl = (()=>{
         },
 
         hideForm(){
-            
+            document.getElementById(UISelectors.formDiv).classList.add("hide");
+        },
+
+        showNotesContainer(){
+            document.getElementById(UISelectors.mainApp).classList.remove("hide");
         }
+
 
         /*Features to be made */
         // selectedNote(noteDiv){
@@ -269,9 +263,10 @@ const NotesCtrl = (() =>{
 })();
 
 /* -- App --*/
-const App = ((NotesCtrl, UICtrl, Storage)=>{
+const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
 
     const UISelectors = UICtrl.getSelectors();
+    
 
     const state = {
         noteColor: '',
@@ -303,8 +298,14 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
             note.addEventListener('keyup', getDetails)
         })
 
+        document.getElementById(UISelectors.form).addEventListener("submit", login)
       
-      
+    }
+
+    const login =(e) =>{
+    e.preventDefault();
+        UICtrl.hideForm();
+        UICtrl.showNotesContainer()
     }
 
     const getColor = (e) => {
@@ -414,7 +415,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         },
         
     }
-})(NotesCtrl, UICtrl, Storage);
+})(Formulario,NotesCtrl, UICtrl, Storage);
 
 
 App.init();
