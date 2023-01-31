@@ -51,7 +51,7 @@ const UICtrl = (()=>{
         addNewNoteBtn: 'add-note',
         editNoteBtn : 'edit-btn',
         saveNoteBtn : 'save-btn',
-        deleteBtn: 'delete-btn',
+        deleteNoteBtn: 'delete-btn',
         // noteText: '.notes-paragraph',
         notesDiv: '.sticky-notes-card',
         colors: '.sticky-color',
@@ -277,6 +277,17 @@ const NotesCtrl = (() =>{
           state.notes.splice(noteIndex, 1, found)
           return state.notes
         },
+        deleteCurrent(currentNote){
+            state.currentNote = currentNote;
+            const currentId = parseInt(currentNote.id)
+            const found = state.notes.find(note => note.id === currentId)
+
+            if(found){
+                const noteIndex = state.notes.map(note => note.id).indexOf(currentId)
+                state.notes.splice(noteIndex, 1)
+                return state.notes
+            }
+        }
 
     }
 })();
@@ -306,6 +317,10 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
 
         document.querySelectorAll("#"+UISelectors.saveNoteBtn).forEach(btn =>{
             btn.addEventListener('click', saveEditedNote)
+        })
+
+        document.querySelectorAll("#"+UISelectors.deleteNoteBtn).forEach(btn =>{
+            btn.addEventListener('click', deleteNote)
         })
 
         document.querySelectorAll("#"+UISelectors.noteTitle).forEach(note =>{
@@ -347,6 +362,7 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
         // document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
         document.getElementById(UISelectors.editNoteBtn).addEventListener('click', editNote)
         document.getElementById(UISelectors.saveNoteBtn).addEventListener('click', saveEditedNote)
+        document.getElementById(UISelectors.deleteNoteBtn).addEventListener('click', deleteNote)
         document.getElementById(UISelectors.noteTitle).addEventListener('keyup', getDetails)
         document.getElementById(UISelectors.noteText).addEventListener('keyup', getDetails)
     }
@@ -408,6 +424,21 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
         const newNoteArrayAfterUpdate = NotesCtrl.getNotes(noteEditedAddedOnArray);
         Storage.setNotes(newNoteArrayAfterUpdate)
         UICtrl.isNotAble(noteDivId);
+    }
+
+    const deleteNote = (e) =>{
+        const confirmation = confirm("WARNING!\nAre you sure you want to delete this note?");
+        if(confirmation){
+        const { noteSelected } = state
+        const noteDivId = e.currentTarget.parentElement.id;
+        const noteToDeleteOnArray = NotesCtrl.deleteCurrent(noteSelected)
+        const newNoteArrayAfterUpdate = NotesCtrl.getNotes(noteToDeleteOnArray);
+        Storage.setNotes(newNoteArrayAfterUpdate)
+        console.log(newNoteArrayAfterUpdate)
+        // UICtrl.deleteNote(noteDivId)
+        
+        }
+        
     }
   
     return {
