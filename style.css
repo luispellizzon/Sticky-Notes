@@ -326,11 +326,25 @@ transform: translateY(-100px);
   transition: all .2s ease;
 }
 
-.save-card.notActive{
+.delete-card{
+  position: absolute;
+  visibility: hidden;
+  font-size: .8rem;
+  color: var(--black);
+  bottom: 5px;
+  left: 80px;
+  color: var(--light-gray);
+  border-radius: 5px;
+  background-color: var(--black);
+  padding: .3rem .5rem;
+  transition: all .2s ease;
+}
+
+.save-card.notActive, .delete-card.notActive, .delete-card.notActive > i{
   animation: .5s ease fadeOut;
 }
 
-.save-card.active{
+.save-card.active,  .delete-card.active{
   visibility: visible;
   animation:  .7s ease showSaveBtn;
 }
@@ -356,18 +370,19 @@ transform: translateY(-100px);
 
   100%{
     opacity: 0;
-    visibility: hidden;
     transform: scale(.7);
+    visibility: hidden;
+    
   }
 }
 
-.save-card:hover, .edit-card:hover{
+.save-card:hover, .edit-card:hover, .delete-card:hover{
   color: var(--light-gray);
   background-color: rgb(83, 80, 80)
 
 }
 
-.edit-card:active, .save-card:active{
+.edit-card:active, .save-card:active, .delete-card:active{
   transform: scale(.9);
 }
 

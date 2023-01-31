@@ -51,6 +51,7 @@ const UICtrl = (()=>{
         addNewNoteBtn: 'add-note',
         editNoteBtn : 'edit-btn',
         saveNoteBtn : 'save-btn',
+        deleteBtn: 'delete-btn',
         // noteText: '.notes-paragraph',
         notesDiv: '.sticky-notes-card',
         colors: '.sticky-color',
@@ -98,6 +99,9 @@ const UICtrl = (()=>{
                     </button>
                     <button class="save-card" id="save-btn">
                         save
+                    </button>
+                    <button class="delete-card" id="delete-btn">
+                        <i class="fa-solid fa-trash"></i>
                     </button>
                 </div>
         `
@@ -155,6 +159,9 @@ const UICtrl = (()=>{
                 <button class="save-card" id="save-btn">
                   save
                 </button>
+                <button class="delete-card" id="delete-btn">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
             `
             
             container.prepend(div)
@@ -166,10 +173,13 @@ const UICtrl = (()=>{
             const titleDiv = [...div.children[0].children][0];
             const textDiv = [...div.children[1].children][0];
             const saveBtn = [div.children[3]][0];
+            const deleteBtn = [div.children[4]][0];
             titleDiv.disabled = false;
             textDiv.disabled = false;
             saveBtn.classList.remove('notActive')
+            deleteBtn.classList.remove('notActive')
             saveBtn.classList.add('active')
+            deleteBtn.classList.add('active')
         },
 
         isNotAble(noteId){
@@ -177,10 +187,13 @@ const UICtrl = (()=>{
             const titleDiv = [...div.children[0].children][0];
             const textDiv = [...div.children[1].children][0];
             const saveBtn = [div.children[3]][0];
+            const deleteBtn = [div.children[4]][0];
             titleDiv.disabled = true;
             textDiv.disabled = true;
             saveBtn.classList.remove('active')
+            deleteBtn.classList.remove('active')
             saveBtn.classList.add('notActive')
+            deleteBtn.classList.add('notActive')
         },
 
         getSelectors(){
