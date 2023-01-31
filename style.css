@@ -372,7 +372,6 @@ transform: translateY(-100px);
     opacity: 0;
     transform: scale(.7);
     visibility: hidden;
-    
   }
 }
 
@@ -386,14 +385,26 @@ transform: translateY(-100px);
   transform: scale(.9);
 }
 
-
-
-
 .sticky-notes-card.selected{
 -webkit-box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
 -moz-box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
 box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
 border: 1px solid rgba(0, 0, 0, 0.514);
+}
+
+.deleteAnimation{
+  animation: .5s ease deleteAnimation;
+}
+
+@keyframes deleteAnimation {
+  0%{
+    opacity: 1;
+  }
+
+  100%{
+    opacity: 0;
+    transform: scale(.4); 
+  }
 }
 
 @media (min-width: 600px) {

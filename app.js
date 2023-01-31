@@ -169,8 +169,11 @@ const UICtrl = (()=>{
 
         deleteNote(noteId){
             const noteToDelete = document.getElementById(noteId)
-            console.log(noteToDelete)
-            noteToDelete.remove();
+            noteToDelete.classList.add('deleteAnimation')
+            setTimeout(()=>{
+                noteToDelete.remove();
+            }, 500)
+            
         },
 
         isAble(noteId){
