@@ -12,6 +12,7 @@ const Formulario = (() =>{
         },
         setUsername(nickname){
             formState.user = nickname;
+            console.log(formState.user)
         }
     }
 })();
@@ -32,6 +33,13 @@ const Storage = (() =>{
         },
         setNotes(notes){
             localStorage.setItem('notes', JSON.stringify(notes))
+        },
+        saveUsername(username){
+            localStorage.setItem('username', JSON.stringify(username))
+        },
+        getUsername(){
+            const username =  JSON.parse(localStorage.getItem('username')) ?? [];
+            return username;
         }
 
     }
@@ -53,6 +61,7 @@ const UICtrl = (()=>{
         selected: 'selected',
         form: 'formulario',
         formDiv: 'form',
+        usernameDiv: 'sticky-username',
 
     }
 
@@ -70,6 +79,10 @@ const UICtrl = (()=>{
             setTimeout(() =>{
                 target.classList.remove('animate')
             }, 1000)
+        },
+
+        setUsernameTitle(username){
+            document.getElementById(UISelectors.usernameDiv).innerText = username; 
         },
          populateNotesList(notes){
             let htmlList = "";
@@ -267,7 +280,6 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
 
     const UISelectors = UICtrl.getSelectors();
     
-
     const state = {
         noteColor: '',
         noteSelected:{}
@@ -302,10 +314,22 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
       
     }
 
-    const login =(e) =>{
-    e.preventDefault();
+    const showNotesAndUsername = (username) => {
         UICtrl.hideForm();
-        UICtrl.showNotesContainer()
+        UICtrl.showNotesContainer();
+        UICtrl.setUsernameTitle(username);
+    }
+
+    const login =(e) =>{
+        e.preventDefault();
+        const userName = e.target.children[0].value
+        Formulario.setUsername(userName)
+        const savedUsername = Formulario.getUsername()
+        Storage.saveUsername(savedUsername);
+        UICtrl.hideForm();
+        UICtrl.setUsernameTitle(savedUsername)
+        UICtrl.showNotesContainer();
+        
     }
 
     const getColor = (e) => {
@@ -403,9 +427,14 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
   
     return {
         async init(){
+            //CHECK IF USER EXIST
+            const user = Storage.getUsername();
+            if(user != ""){
+                showNotesAndUsername(user)
+            }
             
+            //CHECK IF USER NOTES EXIST
             const notes = NotesCtrl.getNotes();
-
             if(notes.length > 0){
                 UICtrl.populateNotesList(notes);
             }
