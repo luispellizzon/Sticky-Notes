@@ -168,6 +168,12 @@ const UICtrl = (()=>{
             return note;
         },
 
+        deleteNote(noteId){
+            const noteToDelete = document.getElementById(noteId)
+            console.log(noteToDelete)
+            noteToDelete.remove();
+        },
+
         isAble(noteId){
             const div = document.getElementById(noteId);
             const titleDiv = [...div.children[0].children][0];
@@ -212,16 +218,6 @@ const UICtrl = (()=>{
         showNotesContainer(){
             document.getElementById(UISelectors.mainApp).classList.remove("hide");
         }
-
-
-        /*Features to be made */
-        // selectedNote(noteDiv){
-        //     if(!noteDiv.classList.contains(UISelectors.selected)){
-        //         noteDiv.classList.add(UISelectors.selected)
-        //     }
-            
-        // },
-        
     }
 })();
 
@@ -262,10 +258,7 @@ const NotesCtrl = (() =>{
         editCurrent(currentNote){
             state.currentNote = currentNote;
             const currentId = parseInt(currentNote.id)
-            
             const found = state.notes.find(note => note.id === currentId)
-            
-
             if(state.currentNote.title !== ""){
                 found.title = state.currentNote.title
             }
@@ -277,11 +270,9 @@ const NotesCtrl = (() =>{
           state.notes.splice(noteIndex, 1, found)
           return state.notes
         },
-        deleteCurrent(currentNote){
-            state.currentNote = currentNote;
-            const currentId = parseInt(currentNote.id)
+        deleteCurrent(currentNoteID){
+            const currentId = parseInt(currentNoteID)
             const found = state.notes.find(note => note.id === currentId)
-
             if(found){
                 const noteIndex = state.notes.map(note => note.id).indexOf(currentId)
                 state.notes.splice(noteIndex, 1)
@@ -413,7 +404,6 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
     const editNote = (e) =>{
         const noteDivId = parseInt(e.currentTarget.parentElement.id);
         state.noteSelected = NotesCtrl.getCurrentNote(noteDivId)
-        
         UICtrl.isAble(noteDivId);
     }
 
@@ -429,14 +419,11 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
     const deleteNote = (e) =>{
         const confirmation = confirm("WARNING!\nAre you sure you want to delete this note?");
         if(confirmation){
-        const { noteSelected } = state
         const noteDivId = e.currentTarget.parentElement.id;
-        const noteToDeleteOnArray = NotesCtrl.deleteCurrent(noteSelected)
+        const noteToDeleteOnArray = NotesCtrl.deleteCurrent(noteDivId)
         const newNoteArrayAfterUpdate = NotesCtrl.getNotes(noteToDeleteOnArray);
         Storage.setNotes(newNoteArrayAfterUpdate)
-        console.log(newNoteArrayAfterUpdate)
-        // UICtrl.deleteNote(noteDivId)
-        
+        UICtrl.deleteNote(noteDivId)
         }
         
     }
