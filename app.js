@@ -454,7 +454,15 @@ const App = ((Formulario,NotesCtrl, UICtrl, Storage)=>{
             //CHECK IF USER EXIST
             const user = Storage.getUsername();
             if(user != ""){
-                showNotesAndUsername(user)
+                UICtrl.hideForm();
+                const isLoading = true;
+                UICtrl.showLoading(isLoading)
+
+                setTimeout(()=>{
+                    UICtrl.showLoading(!isLoading)
+                    showNotesAndUsername(user)
+                },1000)
+                
             }
             
             //CHECK IF USER NOTES EXIST
